@@ -3,6 +3,7 @@ package controlador;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import modelo.DAO.ModeloProducto;
+import modelo.DAO.ModeloSeccion;
 import modelo.DTO.Producto;
+import modelo.DTO.Seccion;
 
 /**
  * Servlet implementation class InsertarProducto
@@ -33,8 +36,12 @@ public class InsertarProducto extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
+		ModeloSeccion secciones = new ModeloSeccion();
+		ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>();
+		listaSecciones = secciones.obtenerSecciones();
+		request.setAttribute("listaSecciones", listaSecciones);
+		
 		request.getRequestDispatcher("InsertarProducto.jsp").forward(request, response);
 	}
 
@@ -45,9 +52,9 @@ public class InsertarProducto extends HttpServlet {
 		ModeloProducto insertarP = new ModeloProducto();
 		Producto producto = new Producto();
 		
-		Date fecha_login = null;
+		Date fecha_cad = null;
 		try {
-			fecha_login = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("nuevoCadProduc"));
+			fecha_cad = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("nuevoCadProduc"));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -57,7 +64,13 @@ public class InsertarProducto extends HttpServlet {
 		producto.setNombre(request.getParameter("nuevoNomProduc"));
 		producto.setCantidad(Integer.parseInt(request.getParameter("nuevoCantProduc")));
 		producto.setPrecio(Double.parseDouble(request.getParameter("nuevoPrecProduc")));
-		producto.setCaducidad((fecha_login));
+		producto.setCaducidad((fecha_cad));
+		
+		Seccion seccion = new Seccion();
+		
+		seccion.setId(Integer.parseInt(request.getParameter("nuevaSeccion")));
+		
+		producto.setSeccion(seccion);
 		
 		insertarP.insertarProducto(producto);
 		

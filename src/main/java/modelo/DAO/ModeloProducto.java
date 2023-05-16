@@ -57,7 +57,7 @@ public class ModeloProducto {
 			insertarP.setInt(4, producto.getCantidad());
 			insertarP.setDouble(5, producto.getPrecio());
 			insertarP.setDate(6, new Date(producto.getCaducidad().getTime()));
-			insertarP.setInt(7, 2);
+			insertarP.setInt(7, producto.getSeccion().getId());
 			insertarP.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
