@@ -67,15 +67,17 @@ public class InsertarProducto extends HttpServlet {
 		producto.setCaducidad((fecha_cad));
 		
 		Seccion seccion = new Seccion();
-		
 		seccion.setId(Integer.parseInt(request.getParameter("nuevaSeccion")));
-		
 		producto.setSeccion(seccion);
 		
-		insertarP.insertarProducto(producto);
-		
-		response.sendRedirect(request.getContextPath() + "/VerProductos");
-
+		boolean existe = insertarP.comprobarCodigo(producto.getCodigo());
+		Date hoy = new Date();
+		if(existe == false && producto.getPrecio() > 0 && producto.getCantidad() > 0 && producto.getCaducidad().after(hoy)) {
+			insertarP.insertarProducto(producto);
+			response.sendRedirect(request.getContextPath() + "/VerProductos");
+		}else {
+			response.sendRedirect(request.getContextPath() + "/InsertarProducto");
+		}
 	}
 
 }

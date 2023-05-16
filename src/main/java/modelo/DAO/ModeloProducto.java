@@ -64,4 +64,27 @@ public class ModeloProducto {
 		}
 	}
 	
+	public boolean comprobarCodigo(String codigo) {
+		boolean existe = false;
+		
+		ArrayList<Producto> codigosp = new ArrayList<Producto>();
+		conexion.conectar();
+		
+		try {
+			PreparedStatement compCod = conexion.con.prepareStatement("SELECT codigo FROM productos WHERE codigo = ?");
+			compCod.setString(1, codigo);
+			
+			ResultSet resultado = compCod.executeQuery();
+			
+			while(resultado.next()) {
+				existe = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return existe;
+	}
+	
 }
