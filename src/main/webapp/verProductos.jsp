@@ -10,6 +10,7 @@
 </head>
 <body>
 
+<a class="btn btn-primary" href="/WareHouse/InsertarProducto">Insertar</a>
 	<table class="table">
   <thead>
     <tr>
@@ -32,7 +33,7 @@
       <td><c:out value="${productos.cantidad}"></c:out></td>
       <td><c:out value="${productos.precio}"></c:out></td>
       <td><c:out value="${productos.caducidad}"></c:out></td>
-      <td><c:out value="${productos.id_seccion}"></c:out></td>
+      <td><c:out value="${productos.seccion.nombre}"></c:out></td>
     </tr>
   </c:forEach>
 
