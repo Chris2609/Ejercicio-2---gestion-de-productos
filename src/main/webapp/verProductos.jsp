@@ -21,6 +21,7 @@
       <th scope="col">Precio</th>
       <th scope="col">Caducidad</th>
       <th scope="col">ID_Seccion</th>
+      <th scope="col">Modificar</th>
     </tr>
   </thead>
   <tbody>
@@ -34,6 +35,7 @@
       <td><c:out value="${productos.precio}"></c:out></td>
       <td><c:out value="${productos.caducidad}"></c:out></td>
       <td><c:out value="${productos.seccion.nombre}"></c:out></td>
+      <td><a class="btn btn-warning" href="./ModificarProducto?id=<c:out value ="${productos.id}"></c:out>&codigo=<c:out value ="${productos.codigo}"></c:out>&nombre=<c:out value ="${productos.nombre}"></c:out>&cantidad=<c:out value ="${productos.cantidad}"></c:out>&precio=<c:out value ="${productos.precio}"></c:out>&caducidad=<c:out value ="${productos.caducidad}"></c:out>&seccion=<c:out value ="${productos.seccion.id}"></c:out>">Modificar</a></td>
     </tr>
   </c:forEach>
 

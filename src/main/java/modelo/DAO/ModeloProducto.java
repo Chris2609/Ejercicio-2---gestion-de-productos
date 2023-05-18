@@ -87,4 +87,24 @@ public class ModeloProducto {
 		return existe;
 	}
 	
+	public void actualizarProduc(Producto producto) {
+		conexion.conectar();
+		
+		try {
+			PreparedStatement actualizarP = conexion.con.prepareStatement("UPDATE productos SET codigo = ?, nombre = ?, cantidad = ?, precio = ?, caducidad = ?, seccion = ? WHERE id = ?");
+			
+			actualizarP.setString(1, producto.getCodigo());
+			actualizarP.setString(2, producto.getNombre());
+			actualizarP.setInt(3, producto.getCantidad());
+			actualizarP.setDouble(4, producto.getPrecio());
+			actualizarP.setDate(5, new Date (producto.getCaducidad().getTime()));
+			actualizarP.setInt(6, producto.getSeccion().getId());
+			actualizarP.setInt(7, producto.getId());
+			
+			actualizarP.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
