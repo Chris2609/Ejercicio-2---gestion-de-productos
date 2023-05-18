@@ -42,6 +42,10 @@ public class InsertarProducto extends HttpServlet {
 		listaSecciones = secciones.obtenerSecciones();
 		request.setAttribute("listaSecciones", listaSecciones);
 		
+		boolean existe = false;
+		existe = request.getParameter("existe") != null;
+		request.setAttribute("existe", existe);
+
 		request.getRequestDispatcher("InsertarProducto.jsp").forward(request, response);
 	}
 
@@ -72,11 +76,12 @@ public class InsertarProducto extends HttpServlet {
 		
 		boolean existe = insertarP.comprobarCodigo(producto.getCodigo());
 		Date hoy = new Date();
-		if(existe == false && producto.getPrecio() > 0 && producto.getCantidad() > 0 && producto.getCaducidad().after(hoy)) {
+		if(existe == false && producto.getPrecio() > 0 && producto.getCantidad() > 0 && producto.getCaducidad().after(hoy) && producto.getSeccion() != null) {
 			insertarP.insertarProducto(producto);
 			response.sendRedirect(request.getContextPath() + "/VerProductos");
 		}else {
-			response.sendRedirect(request.getContextPath() + "/InsertarProducto");
+			existe = true;
+			response.sendRedirect(request.getContextPath() + "/InsertarProducto?existe="+existe);
 		}
 	}
 

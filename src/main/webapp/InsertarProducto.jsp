@@ -9,6 +9,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+	
+	<c:if test="${existe eq true}">
+		<h1>Ha ocurrido un error con alguno de los campos, revisa los datos antes de enviar</h1>
+	</c:if>
+
 	<form method="POST" action="InsertarProducto">
 	<input type="number" name="nuevoIdProduc" placeholder="ID producto">
 	<br>
