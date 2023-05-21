@@ -91,7 +91,7 @@ public class ModeloProducto {
 		conexion.conectar();
 		
 		try {
-			PreparedStatement actualizarP = conexion.con.prepareStatement("UPDATE productos SET codigo = ?, nombre = ?, cantidad = ?, precio = ?, caducidad = ?, seccion = ? WHERE id = ?");
+			PreparedStatement actualizarP = conexion.con.prepareStatement("UPDATE productos SET codigo = ?, nombre = ?, cantidad = ?, precio = ?, caducidad = ?, id_seccion = ? WHERE id = ?");
 			
 			actualizarP.setString(1, producto.getCodigo());
 			actualizarP.setString(2, producto.getNombre());

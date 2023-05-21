@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import modelo.DTO.Producto;
+import modelo.DAO.ModeloProducto;
+import modelo.DTO.*;
 
 /**
  * Servlet implementation class ModificarProducto
@@ -33,7 +35,6 @@ public class ModificarProducto extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		Producto producto = new Producto();
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		String codigo = (request.getParameter("codigo"));
@@ -41,12 +42,7 @@ public class ModificarProducto extends HttpServlet {
 		int cantidad = Integer.parseInt(request.getParameter("cantidad"));
 		double precio = Double.parseDouble(request.getParameter("precio"));
 		
-		Date caducidad = null;
-		try {
-			caducidad = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("caducidad"));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		String caducidad = request.getParameter("caducidad");
 		
 		int idSeccion = Integer.parseInt(request.getParameter("seccion"));
 		
@@ -68,9 +64,32 @@ public class ModificarProducto extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		Producto productoMod = new Producto();
 		
+		productoMod.setId(Integer.parseInt(request.getParameter("actuId")));
+		productoMod.setCodigo(request.getParameter("actuCodigo"));
+		productoMod.setNombre(request.getParameter("actuNombre"));
+		productoMod.setCantidad(Integer.parseInt(request.getParameter("actuCantidad")));
+		productoMod.setPrecio(Double.parseDouble(request.getParameter("actuPrecio")));
 		
-	
+		String fechaCad = request.getParameter("actuCaducidad");
+		
+		Date fecha_cad = null;
+		try {
+			fecha_cad = new SimpleDateFormat("yyyy-MM-dd").parse(fechaCad);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		productoMod.setCaducidad(fecha_cad);
+		
+		Seccion seccion = new Seccion();
+		seccion.setId(Integer.parseInt(request.getParameter("actuSeccion")));
+		productoMod.setSeccion(seccion);
+		
+		ModeloProducto modProducto = new ModeloProducto();
+		
+		modProducto.actualizarProduc(productoMod);
+		response.sendRedirect(request.getContextPath() + "/VerProductos");
 	}
 
 }
