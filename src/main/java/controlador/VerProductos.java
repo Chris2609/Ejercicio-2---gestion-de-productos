@@ -2,6 +2,7 @@ package controlador;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,8 +46,29 @@ public class VerProductos extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		String busqueda = "";
+		
+		busqueda = request.getParameter("busqueda");
+		
+		ArrayList<Producto> productos = new ArrayList<Producto>(); 
+		ModeloProducto mproducto = new ModeloProducto();
+		
+		productos = mproducto.verProductos();
+		
+		ListIterator<Producto> filtroP = productos.listIterator();
+		while(filtroP.hasNext()) {
+			Producto siguienteP = new Producto();
+			siguienteP = filtroP.next();
+			if(!siguienteP.getNombre().contains(busqueda) && !siguienteP.getCodigo().contains(busqueda) ) {
+				filtroP.remove();
+			}
+		
+		}
+		
+		request.setAttribute("productos", productos);
+		request.getRequestDispatcher("verProductos.jsp").forward(request, response);
+		
 	}
 
 }

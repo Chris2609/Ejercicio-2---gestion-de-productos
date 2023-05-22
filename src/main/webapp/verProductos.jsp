@@ -11,6 +11,13 @@
 <body>
 
 <a class="btn btn-primary" href="/WareHouse/InsertarProducto">Insertar</a>
+
+<form method="POST" action="VerProductos">
+	<input type="text" name="busqueda" placeholder="Codigo o nombre">
+	
+	<button type="submit">Buscar</button>
+</form>
+
 	<table class="table">
   <thead>
     <tr>
