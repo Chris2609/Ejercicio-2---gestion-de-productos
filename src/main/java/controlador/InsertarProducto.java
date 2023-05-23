@@ -73,6 +73,8 @@ public class InsertarProducto extends HttpServlet {
 		
 		Seccion seccion = new Seccion();
 		seccion.setId(Integer.parseInt(request.getParameter("nuevaSeccion")));
+		
+		
 		producto.setSeccion(seccion);
 		
 		boolean existe = insertarP.comprobarCodigo(producto.getCodigo());

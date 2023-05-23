@@ -12,10 +12,20 @@
 
 <a class="btn btn-primary" href="/WareHouse/InsertarProducto">Insertar</a>
 
+<h3>Buscador</h3>
 <form method="POST" action="VerProductos">
 	<input type="text" name="busqueda" placeholder="Codigo o nombre">
 	
-	<button type="submit">Buscar</button>
+	<button type="submit" name="boton" value="buscar">Buscar</button>
+</form>
+
+<form method="POST" action="VerProductos">
+
+<h3>Rango de precios</h3>
+<input type="number" name="minimo" placeholder="minimo">
+<input type="number" name="maximo" placeholder="maximo">
+
+	<button type="submit" name="boton" value="filtrar">Filtrar</button>
 </form>
 
 	<table class="table">
@@ -29,6 +39,8 @@
       <th scope="col">Caducidad</th>
       <th scope="col">ID_Seccion</th>
       <th scope="col">Modificar</th>
+      <th scope="col">Eliminar</th>
+      
     </tr>
   </thead>
   <tbody>
@@ -43,7 +55,8 @@
       <td><c:out value="${productos.caducidad}"></c:out></td>
       <td><c:out value="${productos.seccion.nombre}"></c:out></td>
       <td><a class="btn btn-warning" href="./ModificarProducto?id=<c:out value ="${productos.id}"></c:out>&codigo=<c:out value ="${productos.codigo}"></c:out>&nombre=<c:out value ="${productos.nombre}"></c:out>&cantidad=<c:out value ="${productos.cantidad}"></c:out>&precio=<c:out value ="${productos.precio}"></c:out>&caducidad=<c:out value ="${productos.caducidad}"></c:out>&seccion=<c:out value ="${productos.seccion.id}"></c:out>">Modificar</a></td>
-    </tr>
+      <td><a class="btn btn-danger" href="./EliminarProducto?id=<c:out value="${productos.id}"></c:out>">Eliminar</a></td>
+    </tr> 
   </c:forEach>
 
   </tbody>

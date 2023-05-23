@@ -47,28 +47,58 @@ public class VerProductos extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String busqueda = "";
-		
-		busqueda = request.getParameter("busqueda");
+		String botonPulsado = request.getParameter("boton");
 		
 		ArrayList<Producto> productos = new ArrayList<Producto>(); 
 		ModeloProducto mproducto = new ModeloProducto();
 		
-		productos = mproducto.verProductos();
-		
-		ListIterator<Producto> filtroP = productos.listIterator();
-		while(filtroP.hasNext()) {
-			Producto siguienteP = new Producto();
-			siguienteP = filtroP.next();
-			if(!siguienteP.getNombre().contains(busqueda) && !siguienteP.getCodigo().contains(busqueda) ) {
-				filtroP.remove();
+		if (botonPulsado.equals("buscar")) {
+			//aqui empieza el buscador
+			String busqueda = "";
+			
+			busqueda = request.getParameter("busqueda");
+			
+			productos = mproducto.verProductos();
+			
+			ListIterator<Producto> filtroP = productos.listIterator();
+			while(filtroP.hasNext()) {
+				Producto siguienteP = new Producto();
+				siguienteP = filtroP.next();
+				if(!siguienteP.getNombre().contains(busqueda) && !siguienteP.getCodigo().contains(busqueda)) {
+					filtroP.remove();
+				}
 			}
-		
+			
+			request.setAttribute("productos", productos);
+			request.getRequestDispatcher("verProductos.jsp").forward(request, response);
+		} else if (botonPulsado.equals("filtrar")) {
+			int minimo = 0; 
+			int maximo = 9999;
+			
+			if (request.getParameter("minimo") != "") {
+				minimo = Integer.parseInt(request.getParameter("minimo"));
+			}
+			if (request.getParameter("maximo") != "") {
+				maximo = Integer.parseInt(request.getParameter("maximo"));
+			}
+
+			productos = mproducto.verProductos();
+			
+			ListIterator<Producto> precio = productos.listIterator();
+			while(precio.hasNext()) {
+				Producto siguienteP = new Producto();
+				siguienteP = precio.next();
+				if(siguienteP.getPrecio() < minimo || siguienteP.getPrecio() > maximo) {
+					precio.remove();
+				}
+			}
+			request.setAttribute("productos", productos);
+			request.getRequestDispatcher("verProductos.jsp").forward(request, response);
 		}
+
 		
-		request.setAttribute("productos", productos);
-		request.getRequestDispatcher("verProductos.jsp").forward(request, response);
 		
+
 	}
 
 }
