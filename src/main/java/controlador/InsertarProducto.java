@@ -1,10 +1,10 @@
 package controlador;
 
 import java.io.IOException;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import modelo.DAO.ModeloProducto;
 import modelo.DAO.ModeloSeccion;
+import modelo.DAO.ModeloSupermercado;
 import modelo.DTO.Producto;
 import modelo.DTO.Seccion;
+import modelo.DTO.Supermercado;
 
 /**
  * Servlet implementation class InsertarProducto
@@ -43,6 +45,12 @@ public class InsertarProducto extends HttpServlet {
 		listaSecciones = secciones.obtenerSecciones();
 		request.setAttribute("listaSecciones", listaSecciones);
 		
+		ModeloSupermercado mSupermercado= new ModeloSupermercado();
+		ArrayList<Supermercado> listaSupers = new ArrayList<Supermercado>();
+		
+		listaSupers = mSupermercado.obtenerSupers();
+		request.setAttribute("listaSupers", listaSupers);
+		
 		boolean existe = false;
 		existe = request.getParameter("existe") != null;
 		request.setAttribute("existe", existe);
@@ -64,7 +72,6 @@ public class InsertarProducto extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		producto.setId(Integer.parseInt(request.getParameter("nuevoIdProduc")));
 		producto.setCodigo(request.getParameter("nuevoCodProduc"));
 		producto.setNombre(request.getParameter("nuevoNomProduc"));
 		producto.setCantidad(Integer.parseInt(request.getParameter("nuevoCantProduc")));
@@ -81,6 +88,16 @@ public class InsertarProducto extends HttpServlet {
 		Date hoy = new Date();
 		if(existe == false && producto.getPrecio() > 0 && producto.getCantidad() > 0 && producto.getCaducidad().after(hoy) && producto.getSeccion() != null) {
 			insertarP.insertarProducto(producto);
+
+			String[] idSupermercados = request.getParameterValues("supermercados");
+			int[] idsSupermercados = Arrays.stream(idSupermercados).mapToInt(Integer::parseInt).toArray();
+			
+			int idProductoInsertado = insertarP.idProducInsertado(producto.getCodigo());
+			
+			ModeloSupermercado mSuper = new ModeloSupermercado();
+			for (int idSupermercado : idsSupermercados) {
+				mSuper.productoSupermercado(idProductoInsertado, idSupermercado);
+			}
 			response.sendRedirect(request.getContextPath() + "/VerProductos");
 		}else {
 			existe = true;

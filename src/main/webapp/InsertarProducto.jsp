@@ -15,8 +15,7 @@
 	</c:if>
 
 	<form method="POST" action="InsertarProducto">
-	<input type="number" name="nuevoIdProduc" placeholder="ID producto">
-	<br>
+
 	<input type="text" name="nuevoCodProduc" placeholder="Codigo producto">
 	<br>
 	<input type="text" name="nuevoNomProduc" placeholder="Nombre producto">
@@ -34,6 +33,14 @@
 		<option value="${seccion.id}">${seccion.nombre}</option>
 		</c:forEach>
 		</select>
+	
+	<c:forEach var="supermercado" items="${listaSupers}">
+		<br>
+	<input type="checkbox" name="supermercados" value="${supermercado.id}">
+	<label>${supermercado.nombre}</label>
+	</c:forEach>
+
+		
 		
 	
 	<button type="submit">Enviar</button>

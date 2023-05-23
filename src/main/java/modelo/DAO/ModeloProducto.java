@@ -50,14 +50,14 @@ public class ModeloProducto {
 		conexion.conectar();
 		
 		try {
-			PreparedStatement insertarP = conexion.con.prepareStatement("INSERT INTO productos VALUES (?,?,?,?,?,?,?)");
+			PreparedStatement insertarP = conexion.con.prepareStatement("INSERT INTO productos (codigo, nombre, cantidad, precio, caducidad, id_seccion) VALUES (?,?,?,?,?,?)");
 			insertarP.setInt(1, producto.getId());
-			insertarP.setString(2, producto.getCodigo());
-			insertarP.setString(3, producto.getNombre());
-			insertarP.setInt(4, producto.getCantidad());
-			insertarP.setDouble(5, producto.getPrecio());
-			insertarP.setDate(6, new Date(producto.getCaducidad().getTime()));
-			insertarP.setInt(7, producto.getSeccion().getId());
+			insertarP.setString(1, producto.getCodigo());
+			insertarP.setString(2, producto.getNombre());
+			insertarP.setInt(3, producto.getCantidad());
+			insertarP.setDouble(4, producto.getPrecio());
+			insertarP.setDate(5, new Date(producto.getCaducidad().getTime()));
+			insertarP.setInt(6, producto.getSeccion().getId());
 			insertarP.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -119,5 +119,24 @@ public class ModeloProducto {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int idProducInsertado(String codPro) {
+		conexion.conectar();
+		int idPro = 0;
+		try {
+			PreparedStatement idProduc = conexion.con.prepareStatement("SELECT id FROM productos WHERE codigo = ?");
+			idProduc.setString(1, codPro);
+			
+			ResultSet resultado = idProduc.executeQuery();
+			
+			while(resultado.next()) {
+				idPro = resultado.getInt("id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return idPro;
 	}
 }
