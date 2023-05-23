@@ -1,7 +1,10 @@
 package controlador;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.ListIterator;
 
 import javax.servlet.ServletException;
@@ -37,6 +40,25 @@ public class VerProductos extends HttpServlet {
 		ModeloProducto mproducto = new ModeloProducto();
 		
 		productos = mproducto.verProductos();
+		
+		
+		if (request.getParameter("orden") != null) {
+			if (request.getParameter("orden").equals("asc")) {
+				 Collections.sort(productos, new Comparator<Producto>() {
+			            @Override
+			            public int compare(Producto p1, Producto p2) {
+			                return p1.getCodigo().compareTo(p2.getCodigo());
+			            }
+			        });
+			} else if (request.getParameter("orden").equals("desc")) {
+			     Collections.sort(productos, new Comparator<Producto>() {
+			            @Override
+			            public int compare(Producto p1, Producto p2) {
+			                return p2.getCodigo().compareTo(p1.getCodigo());
+			            }
+			        });
+			}
+		}
 		request.setAttribute("productos", productos);
 		
 		request.getRequestDispatcher("verProductos.jsp").forward(request, response);

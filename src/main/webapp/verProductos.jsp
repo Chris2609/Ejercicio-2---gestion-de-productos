@@ -32,7 +32,7 @@
   <thead>
     <tr>
       <th scope="col">ID</th>
-      <th scope="col">Codigo</th>
+      <th scope="col">Codigo <a href="./VerProductos?orden=asc">Ascendente</a> <a href="./VerProductos?orden=desc">Descendente</a></th>
       <th scope="col">Nombre</th>
       <th scope="col">Cantidad</th>
       <th scope="col">Precio</th>
