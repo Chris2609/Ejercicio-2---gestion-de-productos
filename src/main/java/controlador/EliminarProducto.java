@@ -34,7 +34,17 @@ public class EliminarProducto extends HttpServlet {
 		id = Integer.parseInt(request.getParameter("id"));
 		
 		ModeloProducto mProducto = new ModeloProducto();
-		mProducto.eliminarProduc(id);
+		
+		int cantidad = mProducto.obtenerCantidad(id);
+		boolean existeEnSupers = mProducto.comprobarProducSuper(id);
+		if(cantidad > 0) {
+			mProducto.restarUnProduc(id);
+		}else if(cantidad == 0 && existeEnSupers == true) {
+			mProducto.eliminarProducSuper(id);
+		}
+		if(cantidad == 0 && existeEnSupers == false) {
+			mProducto.eliminarProduc(id);
+		}
 		
 		response.sendRedirect(request.getContextPath() + "/VerProductos");
 

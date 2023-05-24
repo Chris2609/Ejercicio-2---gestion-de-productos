@@ -74,8 +74,8 @@ public class VerProductos extends HttpServlet {
 		ArrayList<Producto> productos = new ArrayList<Producto>(); 
 		ModeloProducto mproducto = new ModeloProducto();
 		
+		//aqui empieza el buscador
 		if (botonPulsado.equals("buscar")) {
-			//aqui empieza el buscador
 			String busqueda = "";
 			
 			busqueda = request.getParameter("busqueda");
@@ -93,6 +93,8 @@ public class VerProductos extends HttpServlet {
 			
 			request.setAttribute("productos", productos);
 			request.getRequestDispatcher("verProductos.jsp").forward(request, response);
+			
+			
 		} else if (botonPulsado.equals("filtrar")) {
 			int minimo = 0; 
 			int maximo = 9999;

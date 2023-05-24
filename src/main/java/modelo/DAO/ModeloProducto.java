@@ -139,4 +139,71 @@ public class ModeloProducto {
 		
 		return idPro;
 	}
+	
+	public int obtenerCantidad(int id) {
+		conexion.conectar();
+		int cantidad = 0;
+		
+		try {
+			PreparedStatement cantidadP = conexion.con.prepareStatement("SELECT cantidad FROM productos WHERE id = ?");
+			cantidadP.setInt(1, id);
+			
+			ResultSet resultado = cantidadP.executeQuery();
+			
+			while(resultado.next()) {
+				cantidad = resultado.getInt("cantidad");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return cantidad;
+		
+	}
+	
+	public boolean comprobarProducSuper(int id) {
+		conexion.conectar();
+		boolean existe = false;
+		
+		try {
+			PreparedStatement comprobarProducSup = conexion.con.prepareStatement("SELECT * FROM productos_supermercados WHERE id_producto = ?");
+			comprobarProducSup.setInt(1, id);
+			
+			ResultSet resultado = comprobarProducSup.executeQuery();
+			while(resultado.next()) {
+				existe = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return existe;
+	}
+	
+	public void restarUnProduc(int id) {
+		conexion.conectar();
+		
+		try {
+			PreparedStatement restarP = conexion.con.prepareStatement("UPDATE productos SET cantidad = cantidad - 1  WHERE id = ?");
+			restarP.setInt(1, id);
+			restarP.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void eliminarProducSuper (int id) {
+		conexion.conectar();
+		
+		try {
+			PreparedStatement eliminarProSup = conexion.con.prepareStatement("DELETE FROM productos_supermercados WHERE id_producto = ?");
+			eliminarProSup.setInt(1, id);
+			eliminarProSup.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }
