@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.ListIterator;
 
 import javax.servlet.ServletException;
@@ -118,6 +119,32 @@ public class VerProductos extends HttpServlet {
 			}
 			request.setAttribute("productos", productos);
 			request.getRequestDispatcher("verProductos.jsp").forward(request, response);
+		
+		} else if (botonPulsado.equals("eliminarProductos")){
+						
+			String[] codigosElim = request.getParameter("codigosElim").split(",");
+			
+			
+			boolean existe = true;
+
+				for (String codigo : codigosElim) {
+					if (existe == true) {
+						existe = mproducto.comprobarCodigo(codigo);
+					}
+				}
+				
+				if (existe == true) {
+					for (String codigo : codigosElim) {
+						mproducto.eliminarProducCod(codigo);
+					}
+				}
+				
+			productos = mproducto.verProductos();
+			request.setAttribute("productos", productos);
+
+			
+			request.getRequestDispatcher("verProductos.jsp").forward(request, response);
+
 		}
 
 		

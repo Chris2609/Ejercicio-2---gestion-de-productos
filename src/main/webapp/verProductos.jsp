@@ -28,6 +28,13 @@
 	<button type="submit" name="boton" value="filtrar">Filtrar</button>
 </form>
 
+<h3>Eliminar productos</h3>
+<form method="POST" action="VerProductos">
+<input type="text" name="codigosElim" placeholder="Eliminar productos">
+
+	<button type="submit" name="boton" value="eliminarProductos">Eliminar</button>
+</form>
+
 	<table class="table">
   <thead>
     <tr>

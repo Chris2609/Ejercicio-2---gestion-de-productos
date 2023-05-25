@@ -203,7 +203,19 @@ public class ModeloProducto {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}	
+	}
+	
+	public void eliminarProducCod(String codigo) {
+		conexion.conectar();
 		
+		try {
+			PreparedStatement eliminarP = conexion.con.prepareStatement("DELETE FROM productos WHERE codigo = ?");
+			eliminarP.setString(1, codigo);
+			eliminarP.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
