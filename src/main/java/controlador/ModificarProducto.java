@@ -1,7 +1,7 @@
 package controlador;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import modelo.DAO.ModeloProducto;
+import modelo.DAO.ModeloSeccion;
 import modelo.DTO.*;
 
 /**
@@ -53,7 +54,11 @@ public class ModificarProducto extends HttpServlet {
 		request.setAttribute("precio", precio);
 		request.setAttribute("caducidad", caducidad);
 		request.setAttribute("idSeccion", idSeccion);
-
+		
+		ModeloSeccion secciones = new ModeloSeccion();
+		ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>();
+		listaSecciones = secciones.obtenerSecciones();
+		request.setAttribute("listaSecciones", listaSecciones);
 		
 		request.getRequestDispatcher("ModificarProducto.jsp").forward(request, response);
 		

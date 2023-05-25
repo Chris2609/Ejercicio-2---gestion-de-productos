@@ -39,8 +39,6 @@
 	<input type="checkbox" name="supermercados" value="${supermercado.id}">
 	<label>${supermercado.nombre}</label>
 	</c:forEach>
-
-		
 		
 	
 	<button type="submit">Enviar</button>

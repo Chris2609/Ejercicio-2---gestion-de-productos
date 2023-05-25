@@ -23,9 +23,14 @@
 	<br>
 	<input type="date" name="actuCaducidad" value="<c:out value="${caducidad}"></c:out>">	
 	<br>
-	<input type="number" name="actuSeccion" placeholder="Seccion producto" value="<c:out value="${idSeccion}"></c:out>">
-	<br><br>
-	<button type="submit">Modificar</button>	
+	<select name="actuSeccion">
+	<c:forEach var="seccion" items="${listaSecciones}">
+		<option <c:if test="${idSeccion eq seccion.id}">selected</c:if> value="${seccion.id}">${seccion.nombre}</option>
+	</c:forEach>
+		</select>
+	<button type="submit">Modificar</button>
+		
 	</form>
 </body>
 </html>
+
