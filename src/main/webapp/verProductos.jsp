@@ -35,9 +35,13 @@
 	<button type="submit" name="boton" value="eliminarProductos">Eliminar</button>
 </form>
 
+  <p class="btn btn-success">Carrito &nbsp<c:out value="${productosCarTam}"></c:out></p>
+
+
 	<table class="table">
   <thead>
     <tr>
+      <th scope="col">Seleccionar</th>
       <th scope="col">ID</th>
       <th scope="col">Codigo <a href="./VerProductos?orden=asc">Ascendente</a> <a href="./VerProductos?orden=desc">Descendente</a></th>
       <th scope="col">Nombre</th>
@@ -52,9 +56,14 @@
     </tr>
   </thead>
   <tbody>
-  <p class="btn btn-success">Carrito &nbsp<c:out value="${productosCarTam}"></c:out></p>
+  
+  <br>
+  <form method="POST" action="EliminarProducto">
+  	<button type="submit" name="boton" value="eliminarSeleccionados">Eliminar seleccionados</button>
+  	  
   <c:forEach var="productos" items="${productos}">
       <tr>
+      <td><input type="checkbox" name="productosEliminar" value="${productos.id}"></td>
       <td><c:out value="${productos.id}"></c:out></td>
       <td><c:out value="${productos.codigo}"></c:out></td>
       <td><c:out value="${productos.nombre}"></c:out></td>
@@ -67,6 +76,8 @@
       <td><a class="btn btn-danger" href="./EliminarProducto?id=<c:out value="${productos.id}"></c:out>">Eliminar</a></td>
     </tr> 
   </c:forEach>
+  
+  </form>
 
   </tbody>
 </table>

@@ -1,6 +1,8 @@
 package controlador;
 
 import java.io.IOException;
+import java.util.Arrays;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,8 +56,22 @@ public class EliminarProducto extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		String botonPulsado = request.getParameter("boton");
+		
+		if(botonPulsado.equals("eliminarSeleccionados")) {
+			
+			String[] idProductos = request.getParameterValues("productosEliminar");
+			int[] idProductosInt = Arrays.stream(idProductos).mapToInt(Integer::parseInt).toArray();
+			
+			ModeloProducto mProducto = new ModeloProducto();
+			for (int idProducto : idProductosInt) {
+				mProducto.eliminarProduc(idProducto);
+			}
+			
+			response.sendRedirect(request.getContextPath() + "/VerProductos");
+		}
+		
 	}
 
 }
