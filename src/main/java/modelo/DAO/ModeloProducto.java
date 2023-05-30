@@ -218,4 +218,29 @@ public class ModeloProducto {
 			e.printStackTrace();
 		}
 	}
+	
+	public Producto obtenerProductoID(int id) {
+		Producto producto = new Producto();
+		conexion.conectar();
+		try {
+			PreparedStatement ver = conexion.con.prepareStatement("SELECT * FROM productos WHERE id = ?");
+			ver.setInt(1, id);
+			
+			ResultSet resultado = ver.executeQuery();
+			
+			while(resultado.next()){
+				producto.setId(resultado.getInt("id"));
+				producto.setCodigo(resultado.getString("codigo"));
+				producto.setNombre(resultado.getString("nombre"));
+				producto.setCantidad(resultado.getInt("cantidad"));
+				producto.setPrecio(resultado.getDouble("precio"));
+				producto.setCaducidad(resultado.getDate("caducidad"));
+				producto.setSeccion(seccionProduc.seccionProduc(resultado.getInt("id_seccion")));
+							}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return producto;
+	}
 }

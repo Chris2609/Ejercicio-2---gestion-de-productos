@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import modelo.DAO.ModeloProducto;
 import modelo.DTO.Producto;
@@ -42,6 +43,11 @@ public class VerProductos extends HttpServlet {
 		
 		productos = mproducto.verProductos();
 		
+		HttpSession session = request.getSession();
+		ArrayList<Producto> productosCar = new ArrayList<Producto>();
+		productosCar = (ArrayList<Producto>) session.getAttribute("productosCarrito");
+		if (productosCar != null)
+		request.setAttribute("productosCarTam", productosCar.size());
 		
 		if (request.getParameter("orden") != null) {
 			if (request.getParameter("orden").equals("asc")) {

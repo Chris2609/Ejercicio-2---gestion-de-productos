@@ -45,13 +45,14 @@
       <th scope="col">Precio</th>
       <th scope="col">Caducidad</th>
       <th scope="col">ID_Seccion</th>
+      <th scope="col">Comprar</th>
       <th scope="col">Modificar</th>
       <th scope="col">Eliminar</th>
       
     </tr>
   </thead>
   <tbody>
-  
+  <p class="btn btn-success">Carrito &nbsp<c:out value="${productosCarTam}"></c:out></p>
   <c:forEach var="productos" items="${productos}">
       <tr>
       <td><c:out value="${productos.id}"></c:out></td>
@@ -61,6 +62,7 @@
       <td><c:out value="${productos.precio}"></c:out></td>
       <td><c:out value="${productos.caducidad}"></c:out></td>
       <td><c:out value="${productos.seccion.nombre}"></c:out></td>
+      <td><a class="btn btn-success" href="./Carrito?id=${productos.id}">Comprar</a></td>
       <td><a class="btn btn-warning" href="./ModificarProducto?id=<c:out value ="${productos.id}"></c:out>&codigo=<c:out value ="${productos.codigo}"></c:out>&nombre=<c:out value ="${productos.nombre}"></c:out>&cantidad=<c:out value ="${productos.cantidad}"></c:out>&precio=<c:out value ="${productos.precio}"></c:out>&caducidad=<c:out value ="${productos.caducidad}"></c:out>&seccion=<c:out value ="${productos.seccion.id}"></c:out>">Modificar</a></td>
       <td><a class="btn btn-danger" href="./EliminarProducto?id=<c:out value="${productos.id}"></c:out>">Eliminar</a></td>
     </tr> 
